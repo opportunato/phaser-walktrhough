@@ -19,9 +19,9 @@
   Bird.prototype.constructor = Bird;
 
   Bird.prototype.flap = function() { 
-     this.body.velocity.y = -400;
+    this.body.velocity.y = -400;
 
-     this.game.add.tween(this).to({angle: -40}, 100).start();
+    this.game.add.tween(this).to({angle: -40}, 100).start();
   };
 
   Bird.prototype.update = function() {

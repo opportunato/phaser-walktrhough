@@ -19,6 +19,7 @@
       this.load.image('title', 'assets/title.png');
       this.load.image('startButton', 'assets/start-button.png');
 
+      this.load.spritesheet('pipe', 'assets/pipes.png', 54,320,2); 
       this.load.spritesheet('bird', 'assets/bird.png', 34, 24, 3);
 
       this.ready = true;

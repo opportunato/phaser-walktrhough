@@ -7,6 +7,7 @@ window.addEventListener('load', function () {
   game.state.add('preloader', ns.Preloader);
   game.state.add('menu', ns.Menu);
   game.state.add('game', ns.Game);
+  game.state.add('gameover', ns.Gameover);
   /* yo phaser:state new-state-files-put-here */
   game.state.start('boot');
 }, false);

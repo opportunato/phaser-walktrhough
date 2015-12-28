@@ -14,8 +14,10 @@
 
       // Create a new bird object
       this.bird = new ns.Bird(this.game, 100, this.game.height/2);
-      // and add it to the game
       this.game.add.existing(this.bird);
+
+      // create and add a group to hold our pipeGroup prefabs
+      this.pipes = this.game.add.group();
 
       this.ground = new ns.Ground(this.game, 0, 400, 335, 112);
       this.game.add.existing(this.ground);
@@ -29,10 +31,35 @@
 
       // add mouse/touch controls
       this.input.onDown.add(this.bird.flap, this.bird);
+
+      this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generatePipes, this);
+      this.pipeGenerator.timer.start();
     },
 
     update: function () {
       this.game.physics.arcade.collide(this.bird, this.ground);
+      this.pipes.forEach(function(pipeGroup) {
+        this.game.physics.arcade.collide(this.bird, pipeGroup, this.handleDeath, null, this);
+      }, this);
+    },
+
+    generatePipes: function() {
+      var pipeY = this.game.rnd.integerInRange(-100, 100);
+      var pipeGroup = this.pipes.getFirstExists(false);
+      if (!pipeGroup) {
+        pipeGroup = new ns.PipeGroup(this.game, this.pipes);  
+      }
+      pipeGroup.reset(this.game.width + pipeGroup.width/2, pipeY);
+    },
+
+    handleDeath: function() {
+      this.game.state.start('gameover');
+    },
+
+    shutdown: function() {
+      this.game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
+      this.bird.destroy();
+      this.pipes.destroy();
     },
   };
 
